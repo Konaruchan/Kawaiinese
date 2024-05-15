@@ -3,11 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Traductor Kawaiinés</title>
+<title>Kawaiinese</title>
+<style>
+    #titulo {
+        text-align: center;
+        font-size: 36px;
+        margin-top: 50px;
+    }
+
+    #subtitulo {
+        text-align: center;
+        font-size: 24px;
+        margin-top: 20px;
+    }
+
+    #textoIntroduccion {
+        text-align: center;
+        margin-top: 20px;
+        font-style: italic;
+    }
+</style>
 </head>
 <body>
 
-<h1>Traductor Kawaiinés</h1>
+<h1 id="titulo">Kawaiinese</h1>
+<h2 id="subtitulo">El idioma más Lindo</h2>
+
+<div id="textoIntroduccion">
+    Traduce palabras al Kawaiines!
+</div>
 
 <!-- Formulario de búsqueda -->
 <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
@@ -16,10 +40,35 @@
 <!-- Resultado de la búsqueda -->
 <div id="resultado"></div>
 
+<!-- Botón para crear palabra -->
+<div id="crearPalabra">
+    <p>Esa palabra aún no ha sido traducida, ¿por qué no la traduces tú mismo?</p>
+    <button type="button" onclick="mostrarFormulario()">Crear Palabra</button>
+</div>
+
+<!-- Formulario para crear palabra -->
+<div id="formularioCrearPalabra" style="display: none;">
+    <label for="inputEspañol">Español:</label>
+    <input type="text" id="inputEspañol" placeholder="Ingrese la palabra en español">
+
+    <label for="inputKawaiinés">Kawaiinés:</label>
+    <input type="text" id="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés">
+
+    <label for="inputComentario">Comentario adicional (opcional):</label>
+    <textarea id="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea>
+
+    <label for="inputApodo">Apodo:</label>
+    <input type="text" id="inputApodo" placeholder="Ingrese su apodo">
+
+    <button type="button" onclick="crearPalabra()">Guardar</button>
+</div>
+
 <!-- Biblioteca SheetJS para leer el archivo Excel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 
 <script>
+var contadorPeticiones = 0;
+
 function buscarTraduccion() {
     var palabra = document.getElementById("palabra").value.toLowerCase().trim();
     
@@ -55,11 +104,56 @@ function buscarTraduccion() {
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
                 document.getElementById("resultado").innerText = "¡Traducción no encontrada!";
+                document.getElementById("crearPalabra").style.display = "block";
             }
         }
     };
 
     xhr.send();
+}
+
+function mostrarFormulario() {
+    document.getElementById("crearPalabra").style.display = "none";
+    document.getElementById("formularioCrearPalabra").style.display = "block";
+}
+
+function crearPalabra() {
+    var palabraEspañol = document.getElementById("inputEspañol").value.trim();
+    var palabraKawaiinés = document.getElementById("inputKawaiinés").value.trim();
+    var comentario = document.getElementById("inputComentario").value.trim();
+    var apodo = document.getElementById("inputApodo").value.trim();
+    // Generar el nombre del archivo de texto
+    contadorPeticiones++;
+    var nombreArchivo = "petition-" + pad(contadorPeticiones, 3) + ".txt";
+    // Guardar los datos en un archivo de texto en GitHub
+    var datos = "Palabra en Español: " + palabraEspañol + "\n";
+    datos += "Palabra en Kawaiinés: " + palabraKawaiinés + "\n";
+    datos += "Comentario adicional: " + comentario + "\n";
+    datos += "Apodo del usuario: " + apodo + "\n";
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.github.com/repos/Violet3445/Kawaiinese/contents/Peticiones/" + nombreArchivo, true);
+    xhr.setRequestHeader("Authorization", "token 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");
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.onload = function() {
+        if (xhr.status === 201) {
+            alert("¡Tu palabra ha sido enviada a revisión! Estaré atento a nuestra página de últimas novedades para saber si es aceptada.");
+            document.getElementById("formularioCrearPalabra").style.display = "none";
+        } else {
+            alert("Error al enviar la palabra. Por favor, inténtalo de nuevo más tarde.");
+        }
+    };
+    xhr.send(JSON.stringify({
+        "message": "Nueva petición de palabra",
+        "content": btoa(datos)
+    }));
+}
+
+// Función auxiliar para rellenar con ceros a la izquierda
+function pad(num, size) {
+    var s = num + "";
+    while (s.length < size) s = "0" + s;
+    return s;
 }
 </script>
 
