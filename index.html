@@ -162,7 +162,7 @@ function crearPalabra() {
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://api.github.com/repos/Violet3445/Kawaiinese/contents/Peticiones/" + nombreArchivo, true);
-    xhr.setRequestHeader("Authorization", "Bearer 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");
+    xhr.setRequestHeader("Authorization: Bearer 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");
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.onload = function() {
         if (xhr.status === 201) {
