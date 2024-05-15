@@ -22,6 +22,33 @@
         margin-top: 20px;
         font-style: italic;
     }
+
+    #crearPalabra {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #formularioCrearPalabra {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    button {
+        margin-top: 10px;
+    }
 </style>
 </head>
 <body>
@@ -34,11 +61,13 @@
 </div>
 
 <!-- Formulario de búsqueda -->
-<input type="text" id="palabra" placeholder="Ingrese una palabra en español">
-<button type="button" onclick="buscarTraduccion()">Traducir</button>
+<div id="busquedaFormulario" style="text-align: center; margin-top: 20px;">
+    <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
+    <button type="button" onclick="buscarTraduccion()">Traducir</button>
+</div>
 
 <!-- Resultado de la búsqueda -->
-<div id="resultado"></div>
+<div id="resultado" style="text-align: center; margin-top: 20px;"></div>
 
 <!-- Botón para crear palabra -->
 <div id="crearPalabra">
@@ -47,18 +76,18 @@
 </div>
 
 <!-- Formulario para crear palabra -->
-<div id="formularioCrearPalabra" style="display: none;">
+<div id="formularioCrearPalabra">
     <label for="inputEspañol">Español:</label>
-    <input type="text" id="inputEspañol" placeholder="Ingrese la palabra en español">
+    <input type="text" id="inputEspañol" placeholder="Ingrese la palabra en español"><br>
 
     <label for="inputKawaiinés">Kawaiinés:</label>
-    <input type="text" id="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés">
+    <input type="text" id="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés"><br>
 
-    <label for="inputComentario">Comentario adicional (opcional):</label>
-    <textarea id="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea>
+    <label for="inputComentario">Comentario adicional (opcional):</label><br>
+    <textarea id="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
 
     <label for="inputApodo">Apodo:</label>
-    <input type="text" id="inputApodo" placeholder="Ingrese su apodo">
+    <input type="text" id="inputApodo" placeholder="Ingrese su apodo"><br>
 
     <button type="button" onclick="crearPalabra()">Guardar</button>
 </div>
