@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traductor Kawaiinés</title>
+</head>
+<body>
+
+<h1>Traductor Kawaiinés</h1>
+
+<!-- Formulario de búsqueda -->
+<input type="text" id="palabra" placeholder="Ingrese una palabra en español">
+<button type="button" onclick="buscarTraduccion()">Traducir</button>
+
+<!-- Resultado de la búsqueda -->
+<div id="resultado"></div>
+
+<!-- Biblioteca SheetJS para leer el archivo Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+<script>
+function buscarTraduccion() {
+    var palabra = document.getElementById("palabra").value.toLowerCase().trim();
+    
+    // Cargar el archivo Excel
+    var archivo = "Kawaiinese.xlsx";
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", archivo, true);
+    xhr.responseType = "arraybuffer";
+
+    xhr.onload = function() {
+        var arrayBuffer = xhr.response;
+        if (arrayBuffer) {
+            var data = new Uint8Array(arrayBuffer);
+            var workbook = XLSX.read(data, { type: "array" });
+            var sheetName = workbook.SheetNames[0];
+            var sheet = workbook.Sheets[sheetName];
+
+            // Convertir la hoja de Excel a JSON
+            var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+            // Buscar la traducción en Kawaiinés
+            var traduccionEncontrada = false;
+            for (var i = 1; i < json.length; i++) {
+                var palabraEspañol = json[i][0].toLowerCase().trim();
+                var palabraKawaiinés = json[i][1];
+                if (palabra === palabraEspañol) {
+                    traduccionEncontrada = true;
+                    document.getElementById("resultado").innerText = "¡La traducción a Kawaiinés es: " + palabraKawaiinés + "!";
+                    break;
+                }
+            }
+
+            // Si no se encuentra la traducción
+            if (!traduccionEncontrada) {
+                document.getElementById("resultado").innerText = "¡Traducción no encontrada!";
+            }
+        }
+    };
+
+    xhr.send();
+}
+</script>
+
+</body>
+</html>
