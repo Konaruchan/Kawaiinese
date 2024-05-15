@@ -169,7 +169,11 @@ function crearPalabra() {
             alert("¡Tu palabra ha sido enviada a revisión! Estaré atento a nuestra página de últimas novedades para saber si es aceptada.");
             document.getElementById("formularioCrearPalabra").style.display = "none";
         } else {
-            alert("Error al enviar la palabra. Por favor, inténtalo de nuevo más tarde.");
+            var mensajeError = "Error al enviar la palabra. Por favor, inténtalo de nuevo más tarde.";
+            if (xhr.responseText) {
+                mensajeError += "\nError: " + xhr.responseText;
+            }
+            alert(mensajeError);
         }
     };
     xhr.send(JSON.stringify({
@@ -177,6 +181,7 @@ function crearPalabra() {
         "content": btoa(datos)
     }));
 }
+
 
 // Función auxiliar para rellenar con ceros a la izquierda
 function pad(num, size) {
