@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kawaiinese - Traductor</title>
+<title>Kawaiinese</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -86,7 +86,7 @@
 <div id="wrapper">
     <div id="content">
         <div id="header">
-            <div id="titulo">Kawaiinese - Traductor</div>
+            <div id="titulo">Kawaiinese</div>
             <div id="paginas">
                 <a href="index.html">Inicio</a>
                 <a href="form.html">Crear palabra</a>
@@ -94,10 +94,86 @@
         </div>
 
         <div id="contenido">
-            <!-- Aquí puedes colocar el código correspondiente al traductor -->
+            <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
+            <button type="button" onclick="buscarTraduccion()">Traducir</button>
+
+            <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
+
+            <div style="margin-top: 20px;">
+                ¡Bienvenidos a la página oficial del Kawaiinés!
+                <p>El Kawaiinés es un idioma inventado con el objetivo de combinar elementos del inglés, español y japonés para crear una experiencia lingüística única. Esta página ha sido creada con la misión de que todos juntos podamos contribuir a desarrollar este idioma y hacerlo lo más completo posible.</p>
+                <p>El Kawaiinés busca ser un idioma sencillo, fácil de aprender y encantador tanto al hablarlo como al escucharlo, especialmente para los otakus y fanáticos del anime y manga. Con su combinación de sonidos y vocabulario, el Kawaiinés ofrece una forma divertida y creativa de comunicarse.</p>
+                <p>Además de ser un idioma para disfrutar entre amigos, el Kawaiinés puede utilizarse como un lenguaje secreto para cifrar mensajes, haciendo que solo aquellos que comprendan el idioma puedan entenderlo. También puede ser simplemente un idioma adicional para divertirse y hacer algunas bromas amistosas, o incluso, si así lo deseamos, ¡convertirse en el idioma oficial de los otakus!</p>
+            </div>
         </div>
     </div>
 </div>
 
+<script>
+var contadorPeticiones = 0;
+
+function buscarTraduccion() {
+    var palabra = document.getElementById("palabra").value.toLowerCase().trim();
+    
+    // Cargar el archivo Excel
+    var archivo = "Kawaiinese.xlsx";
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", archivo, true);
+    xhr.responseType = "arraybuffer";
+
+    xhr.onload = function() {
+        var arrayBuffer = xhr.response;
+        if (arrayBuffer) {
+            var data = new Uint8Array(arrayBuffer);
+            var workbook = XLSX.read(data, { type: "array" });
+            var sheetName = workbook.SheetNames[0];
+            var sheet = workbook.Sheets[sheetName];
+
+            // Convertir la hoja de Excel a JSON
+            var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+            // Buscar la traducción en Kawaiinés
+            var traduccionEncontrada = false;
+            for (var i = 1; i < json.length; i++) {
+                var palabraEspañol = json[i][0].toLowerCase().trim();
+                var palabraKawaiinés = json[i][1];
+                if (palabra === palabraEspañol) {
+                    traduccionEncontrada = true;
+                    mostrarTraduccion(palabraKawaiinés);
+                    break;
+                }
+            }
+
+            // Si no se encuentra la traducción
+            if (!traduccionEncontrada) {
+                mostrarSinTraduccion();
+            }
+        }
+    };
+
+    xhr.send();
+}
+
+function mostrarTraduccion(traduccion) {
+    document.getElementById("resultado").innerHTML = `
+        <h2>Traducción a Kawaiinés:</h2>
+        <p style="font-size: 24px;">${traduccion}</p>
+    `;
+}
+
+function mostrarSinTraduccion() {
+    document.getElementById("resultado").innerHTML = `
+        <p>Esa palabra aún no ha sido traducida</p>
+        <p>¿Por qué no creas su traducción?</p>
+        <button type="button" onclick="redirigirFormulario()">Crear palabra</button>
+    `;
+}
+
+function redirigirFormulario() {
+    window.location.href = "form.html";
+}
+</script>
+
 </body>
 </html>
+
