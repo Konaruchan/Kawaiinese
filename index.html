@@ -24,7 +24,6 @@
     }
 
     #crearPalabra {
-        display: none;
         text-align: center;
         margin-top: 20px;
     }
@@ -34,6 +33,12 @@
         text-align: center;
         margin-top: 20px;
         display: block !important; /* Mostrar el formulario */
+    }
+
+    .mensaje-enviado {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
     }
 
     input[type="text"],
@@ -74,7 +79,6 @@
 
 <!-- Botón para crear palabra -->
 <div id="crearPalabra">
-    <p>Esa palabra aún no ha sido traducida, ¿por qué no la traduces tú mismo?</p>
     <button type="button" onclick="mostrarFormulario()">Crear Palabra</button>
 </div>
     
@@ -100,6 +104,10 @@
     </form>
 </div>
 
+<!-- Mensaje de enviado -->
+<div class="mensaje-enviado" id="mensajeEnviado">
+    Tu palabra ha sido enviada a revisión. Te enviaremos un email cuando la palabra sea aceptada o rechazada. ¡Gracias!
+</div>
 
 <!-- Biblioteca SheetJS para leer el archivo Excel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
@@ -151,7 +159,6 @@ function buscarTraduccion() {
 }
 
 function mostrarFormulario() {
-    alert("Mostrando formulario"); // Añadir esta línea para verificar si la función se ejecuta correctamente
     document.getElementById("crearPalabra").style.display = "none";
     document.getElementById("formularioCrearPalabra").style.display = "block";
 }
@@ -192,8 +199,8 @@ function enviarPeticion() {
             // Ocultar formulario de petición
             document.getElementById("formularioCrearPalabra").style.display = "none";
 
-            // Mostrar mensaje de confirmación
-            alert("Tu petición ha sido enviada correctamente. ¡Gracias!");
+            // Mostrar mensaje de enviado
+            document.getElementById("mensajeEnviado").style.display = "block";
         } else {
             alert("Error al enviar la petición. Por favor, inténtalo de nuevo más tarde.");
         }
