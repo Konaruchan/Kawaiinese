@@ -25,7 +25,6 @@
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         width: 800px; /* Ancho de aproximadamente 800px */
-        height: 100vh; /* Alto ocupa toda la pantalla */
     }
 
     #header {
@@ -38,7 +37,7 @@
     }
 
     #titulo {
-        font-size: 24px;
+        font-size: 36px;
         font-weight: bold;
     }
 
@@ -94,26 +93,20 @@
         </div>
 
         <div id="contenido">
-            <h1>¡Bienvenido a Kawaiinese!</h1>
-            <div id="textoIntroduccion">
-                Traduce palabras al Kawaiines!
-            </div>
+            <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
+            <button type="button" onclick="buscarTraduccion()">Traducir</button>
 
-            <!-- Formulario de búsqueda -->
-            <div id="busquedaFormulario" style="text-align: center; margin-top: 20px;">
-                <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
-                <br>
-                <button type="button" onclick="buscarTraduccion()">Traducir</button> <!-- Botón debajo del cuadro de texto -->
-            </div>
-
-            <!-- Resultado de la búsqueda -->
             <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
+
+            <div style="margin-top: 20px;">
+                ¡Bienvenidos a la página oficial del Kawaiinés!
+                <p>El Kawaiinés es un idioma inventado con el objetivo de combinar elementos del inglés, español y japonés para crear una experiencia lingüística única. Esta página ha sido creada con la misión de que todos juntos podamos contribuir a desarrollar este idioma y hacerlo lo más completo posible.</p>
+                <p>El Kawaiinés busca ser un idioma sencillo, fácil de aprender y encantador tanto al hablarlo como al escucharlo, especialmente para los otakus y fanáticos del anime y manga. Con su combinación de sonidos y vocabulario, el Kawaiinés ofrece una forma divertida y creativa de comunicarse.</p>
+                <p>Además de ser un idioma para disfrutar entre amigos, el Kawaiinés puede utilizarse como un lenguaje secreto para cifrar mensajes, haciendo que solo aquellos que comprendan el idioma puedan entenderlo. También puede ser simplemente un idioma adicional para divertirse y hacer algunas bromas amistosas, o incluso, si así lo deseamos, ¡convertirse en el idioma oficial de los otakus!</p>
+            </div>
         </div>
     </div>
 </div>
-
-<!-- Biblioteca SheetJS para leer el archivo Excel -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 
 <script>
 var contadorPeticiones = 0;
@@ -152,16 +145,13 @@ function buscarTraduccion() {
 
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
-                document.getElementById("resultado").innerHTML = "<p>Esa palabra aún no ha sido traducida</p><p>¿Por qué no creas su traducción?</p><button type='button' onclick='irACrearPalabra()'>Crear palabra</button>";
+                document.getElementById("resultado").innerText = "Esa palabra aún no ha sido traducida\n¿Por qué no creas su traducción?";
+                document.getElementById("crearPalabra").style.display = "block";
             }
         }
     };
 
     xhr.send();
-}
-
-function irACrearPalabra() {
-    window.location.href = "form.html";
 }
 </script>
 
