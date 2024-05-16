@@ -95,7 +95,7 @@
 
         <div id="contenido">
             <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
-            <button type="button" onclick="buscarTraduccion()">Traducir</button>
+            <button type="button" onclick="redirigirTraductor()">Traducir</button>
 
             <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
 
@@ -154,7 +154,12 @@ function buscarTraduccion() {
 
     xhr.send();
 }
+
+function redirigirTraductor() {
+    window.location.href = "traductor.html";
+}
 </script>
 
 </body>
 </html>
+
