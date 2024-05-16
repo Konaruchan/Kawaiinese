@@ -45,8 +45,8 @@
     input[type="text"],
     input[type="email"],
     textarea {
-        width: 60%;
-        height: 100px; /* Ajuste de altura */
+        width: 300px; /* Tamaño horizontal razonable */
+        height: 40px; /* Altura más pequeña */
         margin-bottom: 10px;
     }
 
@@ -80,7 +80,8 @@
     <!-- Formulario de búsqueda -->
     <div id="busquedaFormulario" style="text-align: center; margin-top: 20px;">
         <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
-        <button type="button" onclick="buscarTraduccion()">Traducir</button>
+        <br>
+        <button type="button" onclick="buscarTraduccion()">Traducir</button> <!-- Botón debajo del cuadro de texto -->
     </div>
 
     <!-- Resultado de la búsqueda -->
@@ -142,5 +143,6 @@ function irACrearPalabra() {
 
 </body>
 </html>
+
 
 
