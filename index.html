@@ -76,24 +76,28 @@
 </div>
 
 <!-- Formulario para crear palabra -->
+<!-- Formulario para crear palabra -->
 <div id="formularioCrearPalabra">
-    <label for="inputEspañol">Español:</label>
-    <input type="text" id="inputEspañol" placeholder="Ingrese la palabra en español"><br>
+    <form id="formularioCrearPalabra" action="enviar_email.php" method="post">
+        <label for="inputEspañol">Español:</label>
+        <input type="text" id="inputEspañol" name="inputEspañol" placeholder="Ingrese la palabra en español"><br>
 
-    <label for="inputKawaiinés">Kawaiinés:</label>
-    <input type="text" id="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés"><br>
+        <label for="inputKawaiinés">Kawaiinés:</label>
+        <input type="text" id="inputKawaiinés" name="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés"><br>
 
-    <label for="inputComentario">Comentario adicional (opcional):</label><br>
-    <textarea id="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
+        <label for="inputComentario">Comentario adicional (opcional):</label><br>
+        <textarea id="inputComentario" name="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
 
-    <label for="inputEmail">E-mail:</label>
-    <input type="email" id="inputEmail" placeholder="Ingrese su correo electrónico"><br>
+        <label for="inputEmail">E-mail:</label>
+        <input type="email" id="inputEmail" name="inputEmail" placeholder="Ingrese su correo electrónico"><br>
 
-    <label for="inputApodo">Apodo:</label>
-    <input type="text" id="inputApodo" placeholder="Ingrese su apodo"><br>
+        <label for="inputApodo">Apodo:</label>
+        <input type="text" id="inputApodo" name="inputApodo" placeholder="Ingrese su apodo"><br>
 
-    <button type="button" onclick="enviarPeticion()">Enviar</button>
+        <button type="submit">Enviar</button>
+    </form>
 </div>
+
 
 <!-- Biblioteca SheetJS para leer el archivo Excel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
