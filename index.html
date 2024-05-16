@@ -45,7 +45,8 @@
     input[type="text"],
     input[type="email"],
     textarea {
-        width: 80%;
+        width: 60%;
+        height: 100px; /* Ajuste de altura */
         margin-bottom: 10px;
     }
 
@@ -126,15 +127,20 @@ function buscarTraduccion() {
 
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
-                document.getElementById("resultado").innerText = "¡Traducción no encontrada!";
+                document.getElementById("resultado").innerHTML = "<p>Esa palabra aún no ha sido traducida</p><p>¿Por qué no creas su traducción?</p><button type='button' onclick='irACrearPalabra()'>Crear palabra</button>";
             }
         }
     };
 
     xhr.send();
 }
+
+function irACrearPalabra() {
+    window.location.href = "form.html";
+}
 </script>
 
 </body>
 </html>
+
 
