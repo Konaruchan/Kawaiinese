@@ -166,28 +166,36 @@ function enviarPeticion() {
         return;
     }
 
-    // Generar el contenido del correo
-    var contenidoCorreo = "Palabra en Español: " + palabraEspañol + "\n";
-    contenidoCorreo += "Palabra en Kawaiinés: " + palabraKawaiinés + "\n";
-    contenidoCorreo += "Comentario adicional: " + comentario + "\n";
-    contenidoCorreo += "Apodo del usuario: " + apodo + "\n";
-    contenidoCorreo += "Correo electrónico del usuario: " + email + "\n";
+    // Crear objeto FormData con los datos del formulario
+    var formData = new FormData();
+    formData.append('inputEspañol', palabraEspañol);
+    formData.append('inputKawaiinés', palabraKawaiinés);
+    formData.append('inputComentario', comentario);
+    formData.append('inputEmail', email);
+    formData.append('inputApodo', apodo);
 
-    // Enviar correo electrónico mediante Gmail
-    window.location.href = "mailto:santiolol568@gmail.com?subject=Nueva%20petición%20de%20palabra&body=" + encodeURIComponent(contenidoCorreo);
+    // Enviar solicitud AJAX al servidor
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'enviar_email.php', true);
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            // Limpiar campos después de enviar la petición
+            document.getElementById("inputEspañol").value = "";
+            document.getElementById("inputKawaiinés").value = "";
+            document.getElementById("inputComentario").value = "";
+            document.getElementById("inputEmail").value = "";
+            document.getElementById("inputApodo").value = "";
 
-    // Limpiar campos después de enviar la petición
-    document.getElementById("inputEspañol").value = "";
-    document.getElementById("inputKawaiinés").value = "";
-    document.getElementById("inputComentario").value = "";
-    document.getElementById("inputEmail").value = "";
-    document.getElementById("inputApodo").value = "";
+            // Ocultar formulario de petición
+            document.getElementById("formularioCrearPalabra").style.display = "none";
 
-    // Ocultar formulario de petición
-    document.getElementById("formularioCrearPalabra").style.display = "none";
-
-    // Mostrar mensaje de confirmación
-    alert("Tu petición ha sido enviada correctamente. ¡Gracias!");
+            // Mostrar mensaje de confirmación
+            alert("Tu petición ha sido enviada correctamente. ¡Gracias!");
+        } else {
+            alert("Error al enviar la petición. Por favor, inténtalo de nuevo más tarde.");
+        }
+    };
+    xhr.send(formData);
 }
 </script>
 
