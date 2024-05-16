@@ -74,8 +74,7 @@
     <p>Esa palabra aún no ha sido traducida, ¿por qué no la traduces tú mismo?</p>
     <button type="button" onclick="mostrarFormulario()">Crear Palabra</button>
 </div>
-
-<!-- Formulario para crear palabra -->
+    
 <!-- Formulario para crear palabra -->
 <div id="formularioCrearPalabra">
     <form id="formularioCrearPalabra" action="enviar_email.php" method="post">
@@ -149,19 +148,10 @@ function buscarTraduccion() {
 }
 
 function mostrarFormulario() {
-    // Ocultar el elemento de "crearPalabra"
-    var crearPalabraElement = document.getElementById("crearPalabra");
-    if (crearPalabraElement) {
-        crearPalabraElement.style.display = "none";
-    }
-
-    // Mostrar el formulario de creación de palabra
-    var formularioCrearPalabraElement = document.getElementById("formularioCrearPalabra");
-    if (formularioCrearPalabraElement) {
-        formularioCrearPalabraElement.style.display = "block";
-    }
+    alert("Mostrando formulario"); // Añadir esta línea para verificar si la función se ejecuta correctamente
+    document.getElementById("crearPalabra").style.display = "none";
+    document.getElementById("formularioCrearPalabra").style.display = "block";
 }
-
 
 function enviarPeticion() {
     var palabraEspañol = document.getElementById("inputEspañol").value.trim();
