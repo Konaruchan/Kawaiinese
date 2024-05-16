@@ -23,14 +23,7 @@
         font-style: italic;
     }
 
-    #formularioCrearPalabra {
-        display: none;
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .mensaje-enviado {
-        display: none;
+    #crearPalabra {
         text-align: center;
         margin-top: 20px;
     }
@@ -73,34 +66,7 @@
 
 <!-- Botón para crear palabra -->
 <div id="crearPalabra" style="text-align: center; margin-top: 20px;">
-    <button type="button" onclick="mostrarFormulario()">Crear Palabra</button>
-</div>
-
-<!-- Formulario para crear palabra -->
-<div id="formularioCrearPalabra">
-    <form id="formularioCrearPalabra" onsubmit="enviarPeticion(); return false;">
-        <label for="inputEspañol">Español:</label>
-        <input type="text" id="inputEspañol" name="inputEspañol" placeholder="Ingrese la palabra en español" required><br>
-
-        <label for="inputKawaiinés">Kawaiinés:</label>
-        <input type="text" id="inputKawaiinés" name="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés" required><br>
-
-        <label for="inputComentario">Comentario adicional (opcional):</label><br>
-        <textarea id="inputComentario" name="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
-
-        <label for="inputEmail">E-mail:</label>
-        <input type="email" id="inputEmail" name="inputEmail" placeholder="Ingrese su correo electrónico" required><br>
-
-        <label for="inputApodo">Apodo:</label>
-        <input type="text" id="inputApodo" name="inputApodo" placeholder="Ingrese su apodo" required><br>
-
-        <button type="submit">Enviar</button>
-    </form>
-</div>
-
-<!-- Mensaje de enviado -->
-<div class="mensaje-enviado" id="mensajeEnviado">
-    Tu palabra ha sido enviada a revisión. Te enviaremos un email cuando la palabra sea aceptada o rechazada. ¡Gracias!
+    <a href="form.html">Crear Palabra</a>
 </div>
 
 <!-- Biblioteca SheetJS para leer el archivo Excel -->
@@ -144,62 +110,11 @@ function buscarTraduccion() {
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
                 document.getElementById("resultado").innerText = "¡Traducción no encontrada!";
-                document.getElementById("crearPalabra").style.display = "block";
             }
         }
     };
 
     xhr.send();
-}
-
-function mostrarFormulario() {
-    document.getElementById("crearPalabra").style.display = "none";
-    document.getElementById("formularioCrearPalabra").style.display = "block";
-}
-
-function enviarPeticion() {
-    var palabraEspañol = document.getElementById("inputEspañol").value.trim();
-    var palabraKawaiinés = document.getElementById("inputKawaiinés").value.trim();
-    var comentario = document.getElementById("inputComentario").value.trim();
-    var email = document.getElementById("inputEmail").value.trim();
-    var apodo = document.getElementById("inputApodo").value.trim();
-
-    // Validar campos obligatorios
-    if (!palabraEspañol || !palabraKawaiinés || !email || !apodo) {
-        alert("Por favor, complete todos los campos obligatorios.");
-        return;
-    }
-
-    // Crear objeto FormData con los datos del formulario
-    var formData = new FormData();
-    formData.append('inputEspañol', palabraEspañol);
-    formData.append('inputKawaiinés', palabraKawaiinés);
-    formData.append('inputComentario', comentario);
-    formData.append('inputEmail', email);
-    formData.append('inputApodo', apodo);
-
-    // Enviar solicitud AJAX al servidor
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://formspree.io/f/mkndeybn', true);
-    xhr.onload = function () {
-        if (xhr.status == 200) {
-            // Limpiar campos después de enviar la petición
-            document.getElementById("inputEspañol").value = "";
-            document.getElementById("inputKawaiinés").value = "";
-            document.getElementById("inputComentario").value = "";
-            document.getElementById("inputEmail").value = "";
-            document.getElementById("inputApodo").value = "";
-
-            // Ocultar formulario de petición
-            document.getElementById("formularioCrearPalabra").style.display = "none";
-
-            // Mostrar mensaje de enviado
-            document.getElementById("mensajeEnviado").style.display = "block";
-        } else {
-            alert("Error al enviar la petición. Por favor, inténtalo de nuevo más tarde.");
-        }
-    };
-    xhr.send(formData);
 }
 </script>
 
