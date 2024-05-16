@@ -149,9 +149,19 @@ function buscarTraduccion() {
 }
 
 function mostrarFormulario() {
-    document.getElementById("crearPalabra").style.display = "none";
-    document.getElementById("formularioCrearPalabra").style.display = "block";
+    // Ocultar el elemento de "crearPalabra"
+    var crearPalabraElement = document.getElementById("crearPalabra");
+    if (crearPalabraElement) {
+        crearPalabraElement.style.display = "none";
+    }
+
+    // Mostrar el formulario de creación de palabra
+    var formularioCrearPalabraElement = document.getElementById("formularioCrearPalabra");
+    if (formularioCrearPalabraElement) {
+        formularioCrearPalabraElement.style.display = "block";
+    }
 }
+
 
 function enviarPeticion() {
     var palabraEspañol = document.getElementById("inputEspañol").value.trim();
