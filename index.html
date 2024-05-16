@@ -86,10 +86,13 @@
     <label for="inputComentario">Comentario adicional (opcional):</label><br>
     <textarea id="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
 
+    <label for="inputEmail">E-mail:</label>
+    <input type="email" id="inputEmail" placeholder="Ingrese su correo electrónico"><br>
+
     <label for="inputApodo">Apodo:</label>
     <input type="text" id="inputApodo" placeholder="Ingrese su apodo"><br>
 
-    <button type="button" onclick="crearPalabra()">Guardar</button>
+    <button type="button" onclick="enviarPeticion()">Enviar</button>
 </div>
 
 <!-- Biblioteca SheetJS para leer el archivo Excel -->
@@ -146,48 +149,41 @@ function mostrarFormulario() {
     document.getElementById("formularioCrearPalabra").style.display = "block";
 }
 
-function crearPalabra() {
+function enviarPeticion() {
     var palabraEspañol = document.getElementById("inputEspañol").value.trim();
     var palabraKawaiinés = document.getElementById("inputKawaiinés").value.trim();
     var comentario = document.getElementById("inputComentario").value.trim();
+    var email = document.getElementById("inputEmail").value.trim();
     var apodo = document.getElementById("inputApodo").value.trim();
-    // Generar el nombre del archivo de texto
-    contadorPeticiones++;
-    var nombreArchivo = "petition-" + pad(contadorPeticiones, 3) + ".txt";
-    // Guardar los datos en un archivo de texto en GitHub
-    var datos = "Palabra en Español: " + palabraEspañol + "\n";
-    datos += "Palabra en Kawaiinés: " + palabraKawaiinés + "\n";
-    datos += "Comentario adicional: " + comentario + "\n";
-    datos += "Apodo del usuario: " + apodo + "\n";
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://api.github.com/repos/Violet3445/Kawaiinese/contents/Peticiones/" + nombreArchivo, true);
-    xhr.setRequestHeader("Authorization", "Bearer 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");
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.onload = function() {
-        if (xhr.status === 201) {
-            alert("¡Tu palabra ha sido enviada a revisión! Estaré atento a nuestra página de últimas novedades para saber si es aceptada.");
-            document.getElementById("formularioCrearPalabra").style.display = "none";
-        } else {
-            var mensajeError = "Error al enviar la palabra. Por favor, inténtalo de nuevo más tarde.";
-            if (xhr.responseText) {
-                mensajeError += "\nError: " + xhr.responseText;
-            }
-            alert(mensajeError);
-        }
-    };
-    xhr.send(JSON.stringify({
-        "message": "Nueva petición de palabra",
-        "content": btoa(datos)
-    }));
-}
+    // Validar campos obligatorios
+    if (!palabraEspañol || !palabraKawaiinés || !email || !apodo) {
+        alert("Por favor, complete todos los campos obligatorios.");
+        return;
+    }
 
+    // Generar el contenido del correo
+    var contenidoCorreo = "Palabra en Español: " + palabraEspañol + "\n";
+    contenidoCorreo += "Palabra en Kawaiinés: " + palabraKawaiinés + "\n";
+    contenidoCorreo += "Comentario adicional: " + comentario + "\n";
+    contenidoCorreo += "Apodo del usuario: " + apodo + "\n";
+    contenidoCorreo += "Correo electrónico del usuario: " + email + "\n";
 
-// Función auxiliar para rellenar con ceros a la izquierda
-function pad(num, size) {
-    var s = num + "";
-    while (s.length < size) s = "0" + s;
-    return s;
+    // Enviar correo electrónico mediante Gmail
+    window.location.href = "mailto:santiolol568@gmail.com?subject=Nueva%20petición%20de%20palabra&body=" + encodeURIComponent(contenidoCorreo);
+
+    // Limpiar campos después de enviar la petición
+    document.getElementById("inputEspañol").value = "";
+    document.getElementById("inputKawaiinés").value = "";
+    document.getElementById("inputComentario").value = "";
+    document.getElementById("inputEmail").value = "";
+    document.getElementById("inputApodo").value = "";
+
+    // Ocultar formulario de petición
+    document.getElementById("formularioCrearPalabra").style.display = "none";
+
+    // Mostrar mensaje de confirmación
+    alert("Tu petición ha sido enviada correctamente. ¡Gracias!");
 }
 </script>
 
