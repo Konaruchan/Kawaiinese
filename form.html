@@ -5,9 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formulario para crear palabra</title>
 <style>
-    #formularioCrearPalabra {
-        text-align: center;
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    #header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #f0f0f0;
+    }
+
+    #titulo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #paginas {
+        display: flex;
+        align-items: center;
+    }
+
+    #paginas a {
+        text-decoration: none;
+        color: black;
+        margin-right: 20px;
+    }
+
+    #paginas a:hover {
+        color: blue;
+    }
+
+    #contenido {
         margin-top: 20px;
+        text-align: center;
     }
 
     input[type="text"],
@@ -30,30 +62,39 @@
 </head>
 <body>
 
-<h1>Formulario para crear palabra</h1>
+<div id="header">
+    <div id="titulo">Kawaiinese</div>
+    <div id="paginas">
+        <a href="index.html">Inicio</a>
+        <a href="form.html">Crear palabra</a>
+    </div>
+</div>
 
-<!-- Formulario para crear palabra -->
-<div id="formularioCrearPalabra">
-    <form action="https://formspree.io/f/mkndeybn" method="POST">
-        <label for="inputEspañol">Español:</label>
-        <input type="text" id="inputEspañol" name="inputEspañol" placeholder="Ingrese la palabra en español" required><br>
+<div id="contenido">
+    <h1>Formulario para crear palabra</h1>
 
-        <label for="inputKawaiinés">Kawaiinés:</label>
-        <input type="text" id="inputKawaiinés" name="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés" required><br>
+    <!-- Formulario para crear palabra -->
+    <div id="formularioCrearPalabra">
+        <form action="https://formspree.io/f/mkndeybn" method="POST">
+            <label for="inputEspañol">Español:</label>
+            <input type="text" id="inputEspañol" name="inputEspañol" placeholder="Ingrese la palabra en español" required><br>
 
-        <label for="inputComentario">Comentario adicional (opcional):</label><br>
-        <textarea id="inputComentario" name="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
+            <label for="inputKawaiinés">Kawaiinés:</label>
+            <input type="text" id="inputKawaiinés" name="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés" required><br>
 
-        <label for="inputEmail">E-mail:</label>
-        <input type="email" id="inputEmail" name="_replyto" placeholder="Ingrese su correo electrónico" required><br>
+            <label for="inputComentario">Comentario adicional (opcional):</label><br>
+            <textarea id="inputComentario" name="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
 
-        <label for="inputApodo">Apodo:</label>
-        <input type="text" id="inputApodo" name="inputApodo" placeholder="Ingrese su apodo" required><br>
+            <label for="inputEmail">E-mail:</label>
+            <input type="email" id="inputEmail" name="_replyto" placeholder="Ingrese su correo electrónico" required><br>
 
-        <button type="submit">Enviar</button>
-    </form>
+            <label for="inputApodo">Apodo:</label>
+            <input type="text" id="inputApodo" name="inputApodo" placeholder="Ingrese su apodo" required><br>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
 </div>
 
 </body>
 </html>
-
