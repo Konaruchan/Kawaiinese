@@ -36,7 +36,6 @@
             padding: 10px;
             background-color: #f0f0f0;
             margin-bottom: 20px;
-            width: 100%;
         }
 
         #titulo {
@@ -64,14 +63,23 @@
             text-align: center;
         }
 
-        #resultado {
-            margin-top: 20px;
-            font-size: 24px;
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 300px; /* Tamaño horizontal razonable */
+            height: 40px; /* Altura más pequeña */
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
         }
 
         button {
             margin-top: 10px;
         }
+
     </style>
 </head>
 <body>
@@ -87,23 +95,21 @@
         </div>
 
         <div id="contenido">
-            <div id="resultado"></div>
+            <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
+            <button type="button" onclick="buscarTraduccion()">Traducir</button>
+
+            <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
+
+            <div style="margin-top: 20px;">
+                ¡Bienvenido al Traductor!
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var palabra = urlParams.get('palabra');
-
-        if (palabra) {
-            buscarTraduccion(palabra);
-        }
-    });
-
-    function buscarTraduccion(palabra) {
-        palabra = palabra.toLowerCase().trim();
+    function buscarTraduccion() {
+        var palabra = document.getElementById("palabra").value.toLowerCase().trim();
 
         // Cargar el archivo Excel
         var archivo = "Kawaiinese.xlsx";
@@ -130,8 +136,8 @@
                     if (palabra === palabraEspañol) {
                         traduccionEncontrada = true;
                         document.getElementById("resultado").innerHTML = `
-                            <div style="font-size: 36px; font-weight: bold;">${palabraKawaiinés}</div>
-                            <div style="font-size: 24px; margin-top: 10px;">${json[i][0]}</div>
+                            <div style="font-size: 24px; font-weight: bold;">${palabraKawaiinés}</div>
+                            <div style="font-size: 18px;">${json[i][0]}</div>
                         `;
                         break;
                     }
@@ -140,8 +146,8 @@
                 // Si no se encuentra la traducción
                 if (!traduccionEncontrada) {
                     document.getElementById("resultado").innerHTML = `
-                        <div style="font-size: 24px; font-weight: bold; color: red;">Traducción no encontrada</div>
-                        <div style="font-size: 18px; margin-top: 10px;">Esa palabra aún no ha sido traducida<br>¿Por qué no creas su traducción?</div>
+                        <div style="font-size: 24px; font-weight: bold;">Traducción no encontrada</div>
+                        <div style="font-size: 18px;">Esa palabra aún no ha sido traducida<br>¿Por qué no creas su traducción?</div>
                         <button type="button" onclick="redirigirCrearPalabra()">Crear palabra</button>
                     `;
                 }
