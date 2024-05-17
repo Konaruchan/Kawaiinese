@@ -3,13 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crear Palabra - Kawaiinese</title>
+<title>Traductor - Kawaiinese</title>
+<!-- Agregar la biblioteca XLSX -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 <style>
+    /* Estilos CSS aquí */
     body {
         font-family: Arial, sans-serif;
         background-color: #f0f0f0;
         margin: 0;
         padding: 0;
+    }
+
+    #wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -21,8 +27,8 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        width: 800px;
-        min-height: 100vh;
+        width: 800px; /* Ancho de aproximadamente 800px */
+        height: 100vh; /* Alto ocupa toda la pantalla */
     }
 
     #header {
@@ -62,13 +68,9 @@
     input[type="text"],
     input[type="email"],
     textarea {
-        width: 300px;
-        height: 40px;
+        width: 300px; /* Tamaño horizontal razonable */
+        height: 40px; /* Altura más pequeña */
         margin-bottom: 10px;
-    }
-
-    textarea {
-        height: 80px;
     }
 
     label {
@@ -83,37 +85,71 @@
 </head>
 <body>
 
-<div id="content">
-    <div id="header">
-        <div id="titulo">Crear Palabra - Kawaiinese</div>
-        <div id="paginas">
-            <a href="index.html">Inicio</a>
+<div id="wrapper">
+    <div id="content">
+        <div id="header">
+            <div id="titulo">Traductor - Kawaiinese</div>
+            <div id="paginas">
+                <a href="index.html">Inicio</a>
+            </div>
+        </div>
+
+        <div id="contenido">
+            <h1>¡Bienvenido al traductor Kawaiinese!</h1>
+            <p>Este traductor te permite encontrar la traducción al Kawaiinese de palabras en español.</p>
+            <p>Simplemente ingresa una palabra en español en el campo de abajo y haz clic en el botón "Traducir".</p>
+            <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
+            <button type="button" onclick="buscarTraduccion()">Traducir</button>
+
+            <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
         </div>
     </div>
-
-    <div id="contenido">
-        <h1>¡Crea una nueva palabra en Kawaiinese!</h1>
-
-        <form action="enviar_email.php" method="post">
-            <label for="inputEspañol">Español:</label>
-            <input type="text" id="inputEspañol" name="inputEspañol" placeholder="Ingrese la palabra en español"><br>
-
-            <label for="inputKawaiinés">Kawaiinés:</label>
-            <input type="text" id="inputKawaiinés" name="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés"><br>
-
-            <label for="inputComentario">Comentario adicional (opcional):</label><br>
-            <textarea id="inputComentario" name="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
-
-            <label for="inputEmail">E-mail:</label>
-            <input type="email" id="inputEmail" name="inputEmail" placeholder="Ingrese su correo electrónico"><br>
-
-            <label for="inputApodo">Apodo:</label>
-            <input type="text" id="inputApodo" name="inputApodo" placeholder="Ingrese su apodo"><br>
-
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
 </div>
+
+<script>
+function buscarTraduccion() {
+    var palabra = document.getElementById("palabra").value.toLowerCase().trim();
+    
+    // Cargar el archivo Excel
+    var archivo = "Kawaiinese.xlsx";
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", archivo, true);
+    xhr.responseType = "arraybuffer";
+
+    xhr.onload = function() {
+        var arrayBuffer = xhr.response;
+        if (arrayBuffer) {
+            var data = new Uint8Array(arrayBuffer);
+            var workbook = XLSX.read(data, { type: "array" });
+            var sheetName = workbook.SheetNames[0];
+            var sheet = workbook.Sheets[sheetName];
+
+            // Convertir la hoja de Excel a JSON
+            var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+            // Buscar la traducción en Kawaiinés
+            var traduccionEncontrada = false;
+            for (var i = 1; i < json.length; i++) {
+                var palabraEspañol = json[i][0].toLowerCase().trim();
+                var palabraKawaiinés = json[i][1];
+                if (palabra === palabraEspañol) {
+                    traduccionEncontrada = true;
+                    document.getElementById("resultado").innerText = "¡La traducción a Kawaiinés es: " + palabraKawaiinés + "!";
+                    break;
+                }
+            }
+
+            // Si no se encuentra la traducción
+            if (!traduccionEncontrada) {
+                document.getElementById("resultado").innerText = "Esa palabra aún no ha sido traducida\n¿Por qué no creas su traducción?";
+                document.getElementById("crearPalabra").style.display = "block";
+            }
+        }
+    };
+
+    xhr.send();
+}
+</script>
 
 </body>
 </html>
