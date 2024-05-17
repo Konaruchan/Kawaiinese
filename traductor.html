@@ -93,8 +93,9 @@
         </div>
 
         <div id="contenido">
-            <h1>¡Bienvenido al traductor de Kawaiinese!</h1>
-            <p>¡Bienvenido al traductor de Kawaiinese! Ingresa una palabra en español y descubre su equivalente en Kawaiinese. Si la palabra aún no ha sido traducida, ¡puedes contribuir creando su traducción!</p>
+            <h1>¡Traduce al Kawaiinese!</h1>
+
+            <p>Este traductor te permite buscar la traducción al Kawaiinese de palabras en español.</p>
 
             <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
             <button type="button" onclick="buscarTraduccion()">Traducir</button>
@@ -105,8 +106,6 @@
 </div>
 
 <script>
-var contadorPeticiones = 0;
-
 function buscarTraduccion() {
     var palabra = document.getElementById("palabra").value.toLowerCase().trim();
     
@@ -134,23 +133,19 @@ function buscarTraduccion() {
                 var palabraKawaiinese = json[i][1];
                 if (palabra === palabraEspañol) {
                     traduccionEncontrada = true;
-                    document.getElementById("resultado").innerHTML = "<h2>Traducción a Kawaiinese:</h2><p style='font-size:24px;'>" + palabraKawaiinese + "</p><p style='font-size:18px;'>(" + palabra + " en español)</p>";
+                    document.getElementById("resultado").innerText = "Traducción al Kawaiinese: " + palabraKawaiinese;
                     break;
                 }
             }
 
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
-                document.getElementById("resultado").innerHTML = "<h2>Traducción no encontrada</h2><p>Esa palabra aún no ha sido traducida al Kawaiinese. ¿Por qué no creas su traducción?</p><button onclick='redirigirFormulario()'>Crear traducción</button>";
+                document.getElementById("resultado").innerText = "Esa palabra aún no ha sido traducida";
             }
         }
     };
 
     xhr.send();
-}
-
-function redirigirFormulario() {
-    window.location.href = "form.html";
 }
 </script>
 
