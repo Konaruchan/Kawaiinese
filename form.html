@@ -10,9 +10,6 @@
         background-color: #f0f0f0;
         margin: 0;
         padding: 0;
-    }
-
-    #wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -24,8 +21,8 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        width: 800px; /* Ancho de aproximadamente 800px */
-        height: 100vh; /* Alto ocupa toda la pantalla */
+        width: 800px;
+        min-height: 100vh;
     }
 
     #header {
@@ -65,9 +62,13 @@
     input[type="text"],
     input[type="email"],
     textarea {
-        width: 300px; /* Tamaño horizontal razonable */
-        height: 40px; /* Altura más pequeña */
+        width: 300px;
+        height: 40px;
         margin-bottom: 10px;
+    }
+
+    textarea {
+        height: 80px;
     }
 
     label {
@@ -78,42 +79,39 @@
     button {
         margin-top: 10px;
     }
-
 </style>
 </head>
 <body>
 
-<div id="wrapper">
-    <div id="content">
-        <div id="header">
-            <div id="titulo">Crear Palabra - Kawaiinese</div>
-            <div id="paginas">
-                <a href="index.html">Inicio</a>
-            </div>
+<div id="content">
+    <div id="header">
+        <div id="titulo">Crear Palabra - Kawaiinese</div>
+        <div id="paginas">
+            <a href="index.html">Inicio</a>
         </div>
+    </div>
 
-        <div id="contenido">
-            <h1>¡Crea una nueva palabra en Kawaiinese!</h1>
+    <div id="contenido">
+        <h1>¡Crea una nueva palabra en Kawaiinese!</h1>
 
-            <form action="enviar_email.php" method="post">
-                <label for="inputEspañol">Español:</label>
-                <input type="text" id="inputEspañol" name="inputEspañol" placeholder="Ingrese la palabra en español"><br>
+        <form action="enviar_email.php" method="post">
+            <label for="inputEspañol">Español:</label>
+            <input type="text" id="inputEspañol" name="inputEspañol" placeholder="Ingrese la palabra en español"><br>
 
-                <label for="inputKawaiinés">Kawaiinés:</label>
-                <input type="text" id="inputKawaiinés" name="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés"><br>
+            <label for="inputKawaiinés">Kawaiinés:</label>
+            <input type="text" id="inputKawaiinés" name="inputKawaiinés" placeholder="Ingrese la traducción en Kawaiinés"><br>
 
-                <label for="inputComentario">Comentario adicional (opcional):</label><br>
-                <textarea id="inputComentario" name="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
+            <label for="inputComentario">Comentario adicional (opcional):</label><br>
+            <textarea id="inputComentario" name="inputComentario" placeholder="Ingrese un comentario adicional (opcional)"></textarea><br>
 
-                <label for="inputEmail">E-mail:</label>
-                <input type="email" id="inputEmail" name="inputEmail" placeholder="Ingrese su correo electrónico"><br>
+            <label for="inputEmail">E-mail:</label>
+            <input type="email" id="inputEmail" name="inputEmail" placeholder="Ingrese su correo electrónico"><br>
 
-                <label for="inputApodo">Apodo:</label>
-                <input type="text" id="inputApodo" name="inputApodo" placeholder="Ingrese su apodo"><br>
+            <label for="inputApodo">Apodo:</label>
+            <input type="text" id="inputApodo" name="inputApodo" placeholder="Ingrese su apodo"><br>
 
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
+            <button type="submit">Enviar</button>
+        </form>
     </div>
 </div>
 
