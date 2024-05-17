@@ -1,100 +1,172 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traductor de Kawaiinés</title>
     <!-- Agregar la biblioteca SheetJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <!-- Otros elementos en el head, como estilos CSS o scripts adicionales, si los hubiera -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 800px; /* Ancho de aproximadamente 800px */
+        }
+
+        #header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        #titulo {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        #paginas {
+            display: flex;
+            align-items: center;
+        }
+
+        #paginas a {
+            text-decoration: none;
+            color: black;
+            margin-right: 20px;
+        }
+
+        #paginas a:hover {
+            color: blue;
+        }
+
+        #contenido {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 300px; /* Tamaño horizontal razonable */
+            height: 40px; /* Altura más pequeña */
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+    </style>
 </head>
-
 <body>
-    <!-- Contenido de la página -->
-    <div id="wrapper">
-        <div id="content">
-            <div id="header">
-                <div id="titulo">Traductor de Kawaiinés</div>
-                <div id="paginas">
-                    <a href="index.html">Inicio</a>
-                    <a href="form.html">Crear palabra</a>
-                </div>
+
+<div id="wrapper">
+    <div id="content">
+        <div id="header">
+            <div id="titulo">Kawaiinese</div>
+            <div id="paginas">
+                <a href="index.html">Inicio</a>
+                <a href="form.html">Crear palabra</a>
             </div>
+        </div>
 
-            <div id="contenido">
-                <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
-                <button type="button" onclick="buscarTraduccion()">Traducir</button>
+        <div id="contenido">
+            <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
+            <button type="button" onclick="buscarTraduccion()">Traducir</button>
 
-                <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
+            <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
 
-                <div style="margin-top: 20px;">
-                    ¡Bienvenidos a la página oficial del Kawaiinés!
-                    <p>El Kawaiinés es un idioma inventado con el objetivo de combinar elementos del inglés, español y japonés para crear una experiencia lingüística única. Esta página ha sido creada con la misión de que todos juntos podamos contribuir a desarrollar este idioma y hacerlo lo más completo posible.</p>
-                    <p>El Kawaiinés busca ser un idioma sencillo, fácil de aprender y encantador tanto al hablarlo como al escucharlo, especialmente para los otakus y fanáticos del anime y manga. Con su combinación de sonidos y vocabulario, el Kawaiinés ofrece una forma divertida y creativa de comunicarse.</p>
-                    <p>Además de ser un idioma para disfrutar entre amigos, el Kawaiinés puede utilizarse como un lenguaje secreto para cifrar mensajes, haciendo que solo aquellos que comprendan el idioma puedan entenderlo. También puede ser simplemente un idioma adicional para divertirse y hacer algunas bromas amistosas, o incluso, si así lo deseamos, ¡convertirse en el idioma oficial de los otakus!</p>
-                </div>
+            <div style="margin-top: 20px;">
+                ¡Bienvenidos a la página oficial del Kawaiinés!
+                <p>El Kawaiinés es un idioma inventado con el objetivo de combinar elementos del inglés, español y japonés para crear una experiencia lingüística única. Esta página ha sido creada con la misión de que todos juntos podamos contribuir a desarrollar este idioma y hacerlo lo más completo posible.</p>
+                <p>El Kawaiinés busca ser un idioma sencillo, fácil de aprender y encantador tanto al hablarlo como al escucharlo, especialmente para los otakus y fanáticos del anime y manga. Con su combinación de sonidos y vocabulario, el Kawaiinés ofrece una forma divertida y creativa de comunicarse.</p>
+                <p>Además de ser un idioma para disfrutar entre amigos, el Kawaiinés puede utilizarse como un lenguaje secreto para cifrar mensajes, haciendo que solo aquellos que comprendan el idioma puedan entenderlo. También puede ser simplemente un idioma adicional para divertirse y hacer algunas bromas amistosas, o incluso, si así lo deseamos, ¡convertirse en el idioma oficial de los otakus!</p>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Script para buscar la traducción -->
-    <script>
-        function buscarTraduccion() {
-            var palabra = document.getElementById("palabra").value.toLowerCase().trim();
+<script>
+    function buscarTraduccion() {
+        var palabra = document.getElementById("palabra").value.toLowerCase().trim();
 
-            // Cargar el archivo Excel
-            var archivo = "Kawaiinese.xlsx";
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", archivo, true);
-            xhr.responseType = "arraybuffer";
+        // Cargar el archivo Excel
+        var archivo = "Kawaiinese.xlsx";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", archivo, true);
+        xhr.responseType = "arraybuffer";
 
-            xhr.onload = function () {
-                var arrayBuffer = xhr.response;
-                if (arrayBuffer) {
-                    var data = new Uint8Array(arrayBuffer);
-                    var workbook = XLSX.read(data, { type: "array" });
-                    var sheetName = workbook.SheetNames[0];
-                    var sheet = workbook.Sheets[sheetName];
+        xhr.onload = function () {
+            var arrayBuffer = xhr.response;
+            if (arrayBuffer) {
+                var data = new Uint8Array(arrayBuffer);
+                var workbook = XLSX.read(data, { type: "array" });
+                var sheetName = workbook.SheetNames[0];
+                var sheet = workbook.Sheets[sheetName];
 
-                    // Convertir la hoja de Excel a JSON
-                    var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                // Convertir la hoja de Excel a JSON
+                var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-                    // Buscar la traducción en Kawaiinés
-                    var traduccionEncontrada = false;
-                    for (var i = 1; i < json.length; i++) {
-                        var palabraEspañol = json[i][0].toLowerCase().trim();
-                        var palabraKawaiinés = json[i][1];
-                        if (palabra === palabraEspañol) {
-                            traduccionEncontrada = true;
-                            document.getElementById("resultado").innerHTML = `
-                                <div style="font-size: 24px; font-weight: bold;">${palabraKawaiinés}</div>
-                                <div style="font-size: 18px;">${json[i][2]}</div>
-                            `;
-                            break;
-                        }
-                    }
-
-                    // Si no se encuentra la traducción
-                    if (!traduccionEncontrada) {
+                // Buscar la traducción en Kawaiinés
+                var traduccionEncontrada = false;
+                for (var i = 1; i < json.length; i++) {
+                    var palabraEspañol = json[i][0].toLowerCase().trim();
+                    var palabraKawaiinés = json[i][1];
+                    if (palabra === palabraEspañol) {
+                        traduccionEncontrada = true;
                         document.getElementById("resultado").innerHTML = `
-                            <div style="font-size: 24px; font-weight: bold;">Traducción no encontrada</div>
-                            <div style="font-size: 18px;">Esa palabra aún no ha sido traducida<br>¿Por qué no creas su traducción?</div>
-                            <button type="button" onclick="redirigirCrearPalabra()">Crear palabra</button>
+                            <div style="font-size: 24px; font-weight: bold;">${palabraKawaiinés}</div>
+                            <div style="font-size: 18px;">${json[i][0]}</div>
                         `;
+                        break;
                     }
                 }
-            };
 
-            xhr.send();
-        }
+                // Si no se encuentra la traducción
+                if (!traduccionEncontrada) {
+                    document.getElementById("resultado").innerHTML = `
+                        <div style="font-size: 24px; font-weight: bold;">Traducción no encontrada</div>
+                        <div style="font-size: 18px;">Esa palabra aún no ha sido traducida<br>¿Por qué no creas su traducción?</div>
+                        <button type="button" onclick="redirigirCrearPalabra()">Crear palabra</button>
+                    `;
+                }
+            }
+        };
 
-        // Función para redirigir a la página de creación de palabra
-        function redirigirCrearPalabra() {
-            window.location.href = "form.html";
-        }
-    </script>
+        xhr.send();
+    }
+
+    // Función para redirigir a la página de creación de palabra
+    function redirigirCrearPalabra() {
+        window.location.href = "form.html";
+    }
+</script>
 
 </body>
-
 </html>
+
+   
