@@ -79,6 +79,20 @@
         margin-top: 10px;
     }
 
+    /* Estilos para el diccionario */
+    #diccionario {
+        text-align: left;
+        margin-top: 20px;
+    }
+
+    #diccionario .palabra {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #diccionario .significado {
+        margin-top: 10px;
+    }
 </style>
 </head>
 <body>
@@ -100,7 +114,7 @@
 
             <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
 
-            <p>Este traductor te permite encontrar la traducción de palabras al Kawaiinese. ¡Diviértete traduciendo!</p>
+            <div id="diccionario"></div>
         </div>
     </div>
 </div>
@@ -136,19 +150,40 @@ function buscarTraduccion() {
                 var palabraKawaiinese = json[i][1];
                 if (palabra === palabraEspañol) {
                     traduccionEncontrada = true;
-                    document.getElementById("resultado").innerText = "¡La traducción a Kawaiinese es: " + palabraKawaiinese + "!";
+                    mostrarTraduccion(palabraKawaiinese, i);
                     break;
                 }
             }
 
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
-                document.getElementById("resultado").innerText = "Esa palabra aún no ha sido traducida.";
+                mostrarNoTraducido();
             }
         }
     };
 
     xhr.send();
+}
+
+function mostrarTraduccion(palabraKawaiinese, indice) {
+    var diccionario = document.getElementById("diccionario");
+    diccionario.innerHTML = `
+        <div class="palabra">${palabraKawaiinese}</div>
+        <div class="significado"><strong>Significado en español:</strong> ${json[indice][2]}</div>
+    `;
+}
+
+function mostrarNoTraducido() {
+    var diccionario = document.getElementById("diccionario");
+    diccionario.innerHTML = `
+        <div class="palabra">¡Palabra no traducida!</div>
+        <div class="significado">¡Esta palabra aún no ha sido traducida! ¿Por qué no creas su traducción?</div>
+        <button onclick="redirigirFormulario()">Crear Palabra</button>
+    `;
+}
+
+function redirigirFormulario() {
+    window.location.href = "form.html";
 }
 </script>
 
