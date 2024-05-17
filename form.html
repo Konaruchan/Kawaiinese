@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Traductor - Kawaiinese</title>
-<!-- Agregar la biblioteca XLSX -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 <style>
     /* Estilos CSS aquí */
     body {
@@ -81,6 +79,7 @@
     button {
         margin-top: 10px;
     }
+
 </style>
 </head>
 <body>
@@ -95,17 +94,21 @@
         </div>
 
         <div id="contenido">
-            <h1>¡Bienvenido al traductor Kawaiinese!</h1>
-            <p>Este traductor te permite encontrar la traducción al Kawaiinese de palabras en español.</p>
-            <p>Simplemente ingresa una palabra en español en el campo de abajo y haz clic en el botón "Traducir".</p>
+            <h1>¡Traduce palabras al Kawaiinese!</h1>
+
             <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
             <button type="button" onclick="buscarTraduccion()">Traducir</button>
 
             <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
+
+            <div style="margin-top: 20px;">
+                Este traductor te permite buscar traducciones al Kawaiinese de palabras en español.
+            </div>
         </div>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 <script>
 function buscarTraduccion() {
     var palabra = document.getElementById("palabra").value.toLowerCase().trim();
@@ -127,22 +130,21 @@ function buscarTraduccion() {
             // Convertir la hoja de Excel a JSON
             var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-            // Buscar la traducción en Kawaiinés
+            // Buscar la traducción en Kawaiinese
             var traduccionEncontrada = false;
             for (var i = 1; i < json.length; i++) {
                 var palabraEspañol = json[i][0].toLowerCase().trim();
-                var palabraKawaiinés = json[i][1];
+                var palabraKawaiinese = json[i][1];
                 if (palabra === palabraEspañol) {
                     traduccionEncontrada = true;
-                    document.getElementById("resultado").innerText = "¡La traducción a Kawaiinés es: " + palabraKawaiinés + "!";
+                    document.getElementById("resultado").innerText = "¡La traducción al Kawaiinese es: " + palabraKawaiinese + "!";
                     break;
                 }
             }
 
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
-                document.getElementById("resultado").innerText = "Esa palabra aún no ha sido traducida\n¿Por qué no creas su traducción?";
-                document.getElementById("crearPalabra").style.display = "block";
+                document.getElementById("resultado").innerText = "Esa palabra aún no ha sido traducida al Kawaiinese.";
             }
         }
     };
@@ -153,3 +155,4 @@ function buscarTraduccion() {
 
 </body>
 </html>
+
