@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Traductor - Kawaiinese</title>
 <style>
+    /* Estilos CSS aquí */
     body {
         font-family: Arial, sans-serif;
         background-color: #f0f0f0;
@@ -93,14 +94,16 @@
         </div>
 
         <div id="contenido">
-            <h1>¡Traduce al Kawaiinese!</h1>
-
-            <p>Este traductor te permite buscar la traducción al Kawaiinese de palabras en español.</p>
+            <h1>¡Traduce palabras al Kawaiinese!</h1>
 
             <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
             <button type="button" onclick="buscarTraduccion()">Traducir</button>
 
             <div id="resultado" style="text-align: center; margin-top: 20px;"></div>
+
+            <div style="margin-top: 20px;">
+                Este traductor te permite buscar traducciones al Kawaiinese de palabras en español.
+            </div>
         </div>
     </div>
 </div>
@@ -133,14 +136,14 @@ function buscarTraduccion() {
                 var palabraKawaiinese = json[i][1];
                 if (palabra === palabraEspañol) {
                     traduccionEncontrada = true;
-                    document.getElementById("resultado").innerText = "Traducción al Kawaiinese: " + palabraKawaiinese;
+                    document.getElementById("resultado").innerText = "¡La traducción al Kawaiinese es: " + palabraKawaiinese + "!";
                     break;
                 }
             }
 
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
-                document.getElementById("resultado").innerText = "Esa palabra aún no ha sido traducida";
+                document.getElementById("resultado").innerText = "Esa palabra aún no ha sido traducida al Kawaiinese.";
             }
         }
     };
@@ -149,5 +152,8 @@ function buscarTraduccion() {
 }
 </script>
 
+<!-- Incluso de la biblioteca XLSX directamente en el HTML -->
+
+<script src="xlsx.full.min.js"></script>
 </body>
 </html>
