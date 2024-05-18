@@ -64,18 +64,11 @@
 
     .diccionario {
         margin-top: 20px;
-    }
-
-    .diccionario h2 {
-        font-size: 20px;
+        text-align: left;
     }
 
     .palabra {
         font-weight: bold;
-    }
-
-    .traduccion {
-        margin-bottom: 10px;
     }
 </style>
 </head>
@@ -116,32 +109,9 @@ document.addEventListener("DOMContentLoaded", function() {
             var sheetName = workbook.SheetNames[0];
             var sheet = workbook.Sheets[sheetName];
 
-            // Convertir la hoja de Excel a JSON
-            var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-            // Procesar los datos del diccionario
-            var diccionarioHTML = '';
-            var diccionario = {};
-            for (var i = 1; i < json.length; i++) {
-                var palabraEspañol = json[i][0];
-                var palabraKawaiinese = json[i][1];
-                if (!diccionario[palabraEspañol]) {
-                    diccionario[palabraEspañol] = [];
-                }
-                diccionario[palabraEspañol].push(palabraKawaiinese);
-            }
-
-            // Ordenar las palabras en español alfabéticamente
-            var palabrasOrdenadas = Object.keys(diccionario).sort();
-            palabrasOrdenadas.forEach(function(palabraEspañol) {
-                diccionarioHTML += '<div class="traduccion">';
-                diccionarioHTML += '<span class="palabra">' + palabraEspañol + '</span>: ';
-                diccionarioHTML += diccionario[palabraEspañol].join(', ');
-                diccionarioHTML += '</div>';
-            });
-
-            // Mostrar el diccionario en la página
-            document.getElementById('diccionario').innerHTML = diccionarioHTML;
+            // Mostrar el contenido del archivo Excel tal cual
+            var divDiccionario = document.getElementById("diccionario");
+            divDiccionario.innerHTML = XLSX.utils.sheet_to_html(sheet);
         }
     };
 
