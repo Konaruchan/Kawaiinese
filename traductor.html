@@ -150,7 +150,7 @@ function buscarTraduccion() {
                 var palabraKawaiinese = json[i][1];
                 if (palabra === palabraEspañol) {
                     traduccionEncontrada = true;
-                    mostrarTraduccion(palabraKawaiinese, i);
+                    mostrarTraduccion(palabraKawaiinese, json[i][2]);
                     break;
                 }
             }
@@ -165,11 +165,11 @@ function buscarTraduccion() {
     xhr.send();
 }
 
-function mostrarTraduccion(palabraKawaiinese, indice) {
+function mostrarTraduccion(palabraKawaiinese, significado) {
     var diccionario = document.getElementById("diccionario");
     diccionario.innerHTML = `
         <div class="palabra">${palabraKawaiinese}</div>
-        <div class="significado"><strong>Significado en español:</strong> ${json[indice][2]}</div>
+        <div class="significado"><strong>Significado en español:</strong> ${significado}</div>
     `;
 }
 
