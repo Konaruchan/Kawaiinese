@@ -203,13 +203,12 @@ function mostrarNoTraducido(palabra, json) {
     diccionario.innerHTML = html;
 }
 
-<script>
 function buscarSimilares(palabra, json) {
     var similares = [];
     for (var i = 1; i < json.length; i++) {
         var palabraEspañol = json[i][0].toLowerCase().trim();
         var distancia = calcularDistanciaLevenshtein(palabra, palabraEspañol.replace(/\s*\(.*?\)\s*/g, ''));
-        if (distancia <= 2) { // Ajusta el umbral según sea necesario
+        if(distancia <= 2) { // Ajusta el umbral según sea necesario
             similares.push([json[i][0], json[i][1]]);
         }
     }
@@ -220,6 +219,7 @@ function buscarSimilares(palabra, json) {
 
 function calcularDistanciaLevenshtein(a, b) {
     const matriz = Array(a.length + 1).fill(null).map(() => Array(b.length + 1).fill(null));
+
     for (let i = 0; i <= a.length; i += 1) {
         matriz[i][0] = i;
     }
@@ -245,5 +245,6 @@ function redirigirFormulario() {
     window.location.href = "form.html";
 }
 </script>
+
 </body>
 </html>
