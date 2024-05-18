@@ -62,20 +62,20 @@
         text-align: center;
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
+    .diccionario {
         margin-top: 20px;
     }
 
-    th, td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: left;
+    .diccionario h2 {
+        font-size: 20px;
     }
 
-    th {
-        background-color: #f0f0f0;
+    .palabra {
+        font-weight: bold;
+    }
+
+    .traduccion {
+        margin-bottom: 10px;
     }
 </style>
 </head>
@@ -97,17 +97,7 @@
 
 <div id="contenido">
     <h1>Diccionario Kawaiinese</h1>
-    <table id="tablaDiccionario">
-        <thead>
-            <tr>
-                <th>Español</th>
-                <th>Kawaiinese</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Las filas de la tabla se insertarán aquí -->
-        </tbody>
-    </table>
+    <div class="diccionario" id="diccionario"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
@@ -129,18 +119,29 @@ document.addEventListener("DOMContentLoaded", function() {
             // Convertir la hoja de Excel a JSON
             var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-            // Generar las filas de la tabla
-            var tbody = document.querySelector("#tablaDiccionario tbody");
+            // Procesar los datos del diccionario
+            var diccionarioHTML = '';
+            var diccionario = {};
             for (var i = 1; i < json.length; i++) {
-                var fila = document.createElement("tr");
-                var celdaEspañol = document.createElement("td");
-                var celdaKawaiinese = document.createElement("td");
-                celdaEspañol.textContent = json[i][0];
-                celdaKawaiinese.textContent = json[i][1];
-                fila.appendChild(celdaEspañol);
-                fila.appendChild(celdaKawaiinese);
-                tbody.appendChild(fila);
+                var palabraEspañol = json[i][0];
+                var palabraKawaiinese = json[i][1];
+                if (!diccionario[palabraEspañol]) {
+                    diccionario[palabraEspañol] = [];
+                }
+                diccionario[palabraEspañol].push(palabraKawaiinese);
             }
+
+            // Ordenar las palabras en español alfabéticamente
+            var palabrasOrdenadas = Object.keys(diccionario).sort();
+            palabrasOrdenadas.forEach(function(palabraEspañol) {
+                diccionarioHTML += '<div class="traduccion">';
+                diccionarioHTML += '<span class="palabra">' + palabraEspañol + '</span>: ';
+                diccionarioHTML += diccionario[palabraEspañol].join(', ');
+                diccionarioHTML += '</div>';
+            });
+
+            // Mostrar el diccionario en la página
+            document.getElementById('diccionario').innerHTML = diccionarioHTML;
         }
     };
 
@@ -150,4 +151,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </body>
 </html>
-
