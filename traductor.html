@@ -29,7 +29,7 @@
     }
 
     #header {
-        display: flex;
+        display: flex; 
         justify-content: space-between;
         align-items: center;
         padding: 10px;
@@ -200,12 +200,39 @@ function mostrarNoTraducido(palabra, json) {
 function buscarSimilares(palabra, json) {
     var similares = [];
     for (var i = 1; i < json.length; i++) {
-        var palabraEspañol = json[i][0].toLowerCase();
-        if (palabraEspañol.includes(palabra)) {
+        var palabraEspañol = json[i][0].toLowerCase().trim();
+        var distancia = calcularDistanciaLevenshtein(palabra, palabraEspañol);
+        if (distancia <= 2) { // Ajusta el umbral según sea necesario
             similares.push([json[i][0], json[i][1]]);
         }
     }
+    // Ordenar por distancia de menor a mayor
+    similares.sort((a, b) => calcularDistanciaLevenshtein(palabra, a[0].toLowerCase().trim()) - calcularDistanciaLevenshtein(palabra, b[0].toLowerCase().trim()));
     return similares.slice(0, 3);
+}
+
+function calcularDistanciaLevenshtein(a, b) {
+    const matriz = Array(a.length + 1).fill(null).map(() => Array(b.length + 1).fill(null));
+
+    for (let i = 0; i <= a.length; i += 1) {
+        matriz[i][0] = i;
+    }
+    for (let j = 0; j <= b.length; j += 1) {
+        matriz[0][j] = j;
+    }
+
+    for (let i = 1; i <= a.length; i += 1) {
+        for (let j = 1; j <= b.length; j += 1) {
+            const indicador = a[i - 1] === b[j - 1] ? 0 : 1;
+            matriz[i][j] = Math.min(
+                matriz[i][j - 1] + 1, // Inserción
+                matriz[i - 1][j] + 1, // Eliminación
+                matriz[i - 1][j - 1] + indicador, // Sustitución
+            );
+        }
+    }
+
+    return matriz[a.length][b.length];
 }
 
 function redirigirFormulario() {
@@ -215,4 +242,5 @@ function redirigirFormulario() {
 
 </body>
 </html>
+
 
