@@ -109,9 +109,23 @@ document.addEventListener("DOMContentLoaded", function() {
             var sheetName = workbook.SheetNames[0];
             var sheet = workbook.Sheets[sheetName];
 
-            // Mostrar el contenido del archivo Excel tal cual
+            // Construir la tabla de diccionario
             var divDiccionario = document.getElementById("diccionario");
-            divDiccionario.innerHTML = XLSX.utils.sheet_to_html(sheet);
+            var html = "<table>";
+            var range = XLSX.utils.decode_range(sheet['!ref']);
+            for (var R = range.s.r; R <= range.e.r; ++R) {
+                html += "<tr>";
+                for (var C = range.s.c; C <= range.e.c; ++C) {
+                    var cell_address = { c: C, r: R };
+                    var cell_ref = XLSX.utils.encode_cell(cell_address);
+                    var cell = sheet[cell_ref];
+                    var cellValue = cell ? cell.v : '';
+                    html += "<td>" + cellValue + "</td>";
+                }
+                html += "</tr>";
+            }
+            html += "</table>";
+            divDiccionario.innerHTML = html;
         }
     };
 
@@ -121,3 +135,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </body>
 </html>
+
