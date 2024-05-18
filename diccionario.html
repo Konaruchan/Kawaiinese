@@ -65,13 +65,8 @@
     .diccionario {
         margin-top: 20px;
         display: flex;
-        flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-    }
-
-    .palabra {
-        font-weight: bold;
     }
 
     .entry {
@@ -85,6 +80,11 @@
 
     .entry:hover {
         background-color: #f9f9f9;
+    }
+
+    .sugerido {
+        font-size: 12px;
+        color: #666;
     }
 </style>
 </head>
@@ -132,8 +132,10 @@ document.addEventListener("DOMContentLoaded", function() {
             for (var R = range.s.r + 1; R <= range.e.r; ++R) {
                 var celdaEspañol = sheet[XLSX.utils.encode_cell({ c: 0, r: R })];
                 var celdaKawaiinese = sheet[XLSX.utils.encode_cell({ c: 1, r: R })];
+                var celdaSugerido = sheet[XLSX.utils.encode_cell({ c: 2, r: R })];
                 if (celdaEspañol && celdaKawaiinese) {
-                    html += `<div class="entry"><span class="palabra">${celdaKawaiinese.v}</span><br>${celdaEspañol.v}</div>`;
+                    var sugerido = celdaSugerido ? celdaSugerido.v : "Konaru";
+                    html += `<div class="entry"><span class="palabra">${celdaKawaiinese.v}</span><br>${celdaEspañol.v}<br><span class="sugerido">Sugerido por: ${sugerido}</span></div>`;
                 }
             }
             divDiccionario.innerHTML = html;
