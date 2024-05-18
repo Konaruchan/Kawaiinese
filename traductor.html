@@ -150,14 +150,14 @@ function buscarTraduccion() {
                 var palabraKawaiinese = json[i][1];
                 if (palabra === palabraEspañol) {
                     traduccionEncontrada = true;
-                    mostrarTraduccion(palabraKawaiinese, json[i][2]);
+                    mostrarTraduccion(palabraKawaiinese, palabraEspañol);
                     break;
                 }
             }
 
             // Si no se encuentra la traducción
             if (!traduccionEncontrada) {
-                mostrarNoTraducido();
+                mostrarNoTraducido(palabra, json);
             }
         }
     };
@@ -165,21 +165,47 @@ function buscarTraduccion() {
     xhr.send();
 }
 
-function mostrarTraduccion(palabraKawaiinese, significado) {
+function mostrarTraduccion(palabraKawaiinese, palabraEspañol) {
     var diccionario = document.getElementById("diccionario");
     diccionario.innerHTML = `
         <div class="palabra">${palabraKawaiinese}</div>
-        <div class="significado"><strong>Significado en español:</strong> ${significado}</div>
+        <div class="significado"><strong>Significado en español:</strong> ${palabraEspañol}</div>
     `;
 }
 
-function mostrarNoTraducido() {
+function mostrarNoTraducido(palabra, json) {
     var diccionario = document.getElementById("diccionario");
-    diccionario.innerHTML = `
+    var posiblesTraducciones = buscarSimilares(palabra, json);
+
+    var html = `
         <div class="palabra">¡Palabra no traducida!</div>
         <div class="significado">¡Esta palabra aún no ha sido traducida! ¿Por qué no creas su traducción?</div>
         <button onclick="redirigirFormulario()">Crear Palabra</button>
     `;
+
+    if (posiblesTraducciones.length > 0) {
+        html += `
+            <div class="significado">Otras posibles traducciones</div>
+            <ul>
+        `;
+        posiblesTraducciones.forEach(traduccion => {
+            html += `<li>${traduccion[1]} : ${traduccion[0]}</li>`;
+        });
+        html += `</ul>`;
+    }
+
+    diccionario.innerHTML = html;
+}
+
+function buscarSimilares(palabra, json) {
+    var similares = [];
+    for (var i = 1; i < json.length; i++) {
+        var palabraEspañol = json[i][0].toLowerCase();
+        if (palabraEspañol.includes(palabra)) {
+            similares.push([json[i][0], json[i][1]]);
+        }
+    }
+    return similares.slice(0, 3);
 }
 
 function redirigirFormulario() {
@@ -189,3 +215,4 @@ function redirigirFormulario() {
 
 </body>
 </html>
+
