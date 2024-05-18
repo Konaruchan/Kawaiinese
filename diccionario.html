@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 var celdaSugerido = sheet[XLSX.utils.encode_cell({ c: 2, r: R })];
                 if (celdaEspañol && celdaKawaiinese) {
                     var sugerido = celdaSugerido ? celdaSugerido.v : "Konaru";
-                    html += `<div class="entry"><span class="palabra">${celdaKawaiinese.v}</span><br>${celdaEspañol.v}<br><span class="sugerido">Sugerido por: ${sugerido}</span></div>`;
+                    html += `<div class="entry"><strong><span class="palabra">${celdaKawaiinese.v}</span></strong><br>${celdaEspañol.v}<br><span class="sugerido">Sugerido por: ${sugerido}</span></div>`;
                 }
             }
             divDiccionario.innerHTML = html;
