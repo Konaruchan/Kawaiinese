@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inicio - Kawaiinese</title>
+<title>Kawaiinese</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -25,7 +25,6 @@
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         width: 800px; /* Ancho de aproximadamente 800px */
-        height: auto; /* Alto ajustable */
     }
 
     #header {
@@ -38,25 +37,41 @@
     }
 
     #titulo {
-        font-size: 36px;
-        font-weight: bold;
-        font-family: 'Arial Black', sans-serif; /* Fuente grande y llamativa */
-        margin-bottom: 10px; /* Espacio entre el título y el subtítulo */
-    }
-
-    #subtitulo {
         font-size: 24px;
-        font-style: italic;
-        color: #666; /* Color gris para el subtítulo */
-        margin-bottom: 20px; /* Espacio entre el subtítulo y el campo de traducción */
+        font-weight: bold;
     }
 
-    #traduccion {
-        margin-bottom: 20px; /* Espacio entre el campo de traducción y el texto */
+    #paginas {
+        display: flex;
+        align-items: center;
     }
 
-    #texto {
-        line-height: 1.6; /* Espaciado de línea aumentado para una mejor legibilidad */
+    #paginas a {
+        text-decoration: none;
+        color: black;
+        margin-right: 20px;
+    }
+
+    #paginas a:hover {
+        color: blue;
+    }
+
+    #contenido {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 36px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-size: 24px;
+        color: #666;
+        font-weight: normal;
+        margin-bottom: 20px;
     }
 
     input[type="text"] {
@@ -67,6 +82,13 @@
 
     button {
         height: 40px;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 1.6;
+        text-align: justify;
+        margin-top: 20px;
     }
 </style>
 </head>
@@ -84,18 +106,16 @@
             </div>
         </div>
 
-        <div id="subtitulo">El idioma más lindo</div>
+        <div id="contenido">
+            <h1>Kawaiinese</h1>
+            <h2>El idioma más lindo</h2>
+            
+            <div>
+                <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
+                <button type="button" onclick="redirigirTraductor()">Traducir</button>
+            </div>
 
-        <div id="traduccion">
-            <input type="text" id="palabra" placeholder="Ingrese una palabra en español">
-            <button type="button" onclick="redirigirTraductor()">Traducir</button>
-        </div>
-
-        <div id="texto">
-            <p>Bienvenidos a la página oficial del Kawaiinés.</p>
-            <p>El Kawaiinés es un idioma inventado con el objetivo de combinar elementos del inglés, español y japonés para crear una experiencia lingüística única. Esta página ha sido creada con la misión de que todos juntos podamos contribuir a desarrollar este idioma y hacerlo lo más completo posible.</p>
-            <p>El Kawaiinés busca ser un idioma sencillo, fácil de aprender y encantador tanto al hablarlo como al escucharlo, especialmente para los otakus y fanáticos del anime y manga. Con su combinación de sonidos y vocabulario, el Kawaiinés ofrece una forma divertida y creativa de comunicarse.</p>
-            <p>Además de ser un idioma para disfrutar entre amigos, el Kawaiinés puede utilizarse como un lenguaje secreto para cifrar mensajes, haciendo que solo aquellos que comprendan el idioma puedan entenderlo. También puede ser simplemente un idioma adicional para divertirse y hacer algunas bromas amistosas, o incluso, si así lo deseamos, ¡convertirse en el idioma oficial de los otakus!</p>
+            <p>¡Bienvenidos a la página oficial del Kawaiinés! El Kawaiinés es un idioma inventado con el objetivo de combinar elementos del inglés, español y japonés para crear una experiencia lingüística única.</p>
         </div>
     </div>
 </div>
