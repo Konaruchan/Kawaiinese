@@ -64,11 +64,27 @@
 
     .diccionario {
         margin-top: 20px;
-        text-align: left;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
 
     .palabra {
         font-weight: bold;
+    }
+
+    .entry {
+        width: 45%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .entry:hover {
+        background-color: #f9f9f9;
     }
 </style>
 </head>
@@ -109,22 +125,17 @@ document.addEventListener("DOMContentLoaded", function() {
             var sheetName = workbook.SheetNames[0];
             var sheet = workbook.Sheets[sheetName];
 
-            // Construir la tabla de diccionario
+            // Construir la lista del diccionario
             var divDiccionario = document.getElementById("diccionario");
-            var html = "<table>";
+            var html = "";
             var range = XLSX.utils.decode_range(sheet['!ref']);
-            for (var R = range.s.r; R <= range.e.r; ++R) {
-                html += "<tr>";
-                for (var C = range.s.c; C <= range.e.c; ++C) {
-                    var cell_address = { c: C, r: R };
-                    var cell_ref = XLSX.utils.encode_cell(cell_address);
-                    var cell = sheet[cell_ref];
-                    var cellValue = cell ? cell.v : '';
-                    html += "<td>" + cellValue + "</td>";
+            for (var R = range.s.r + 1; R <= range.e.r; ++R) {
+                var celdaEspañol = sheet[XLSX.utils.encode_cell({ c: 0, r: R })];
+                var celdaKawaiinese = sheet[XLSX.utils.encode_cell({ c: 1, r: R })];
+                if (celdaEspañol && celdaKawaiinese) {
+                    html += `<div class="entry"><span class="palabra">${celdaKawaiinese.v}</span><br>${celdaEspañol.v}</div>`;
                 }
-                html += "</tr>";
             }
-            html += "</table>";
             divDiccionario.innerHTML = html;
         }
     };
