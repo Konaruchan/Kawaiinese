@@ -130,7 +130,9 @@
 <script>
 function redirigirTraductor() {
     var palabra = document.getElementById("palabra").value;
-    window.location.href = "traductor.html"
+    window.location.href = "traductor.html?palabra=" + encodeURIComponent(palabra);
+}
 </script>
-</body> 
+
+</body>
 </html>
