@@ -21,10 +21,15 @@
 
     #content {
         background-color: white;
-        padding: 20px;
+        padding: 40px;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         width: 800px; /* Ancho de aproximadamente 800px */
+        min-height: 100vh;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     #header {
@@ -57,8 +62,9 @@
     }
 
     #contenido {
-        margin-top: 20px;
-        text-align: center;
+        text-align: justify;
+        flex-grow: 1;
+        margin-bottom: 20px;
     }
 
     h1 {
@@ -87,7 +93,6 @@
     p {
         font-size: 16px;
         line-height: 1.6;
-        text-align: justify;
         margin-top: 20px;
     }
 </style>
@@ -115,7 +120,9 @@
                 <button type="button" onclick="redirigirTraductor()">Traducir</button>
             </div>
 
-            <p>¡Bienvenidos a la página oficial del Kawaiinés! El Kawaiinés es un idioma inventado con el objetivo de combinar elementos del inglés, español y japonés para crear una experiencia lingüística única.</p>
+            <p>¡Bienvenidos a la página oficial del Kawaiinés! El Kawaiinés es un idioma inventado con el objetivo de combinar elementos del inglés, español y japonés para crear una experiencia lingüística única. Esta página ha sido creada con la misión de que todos juntos podamos contribuir a desarrollar este idioma y hacerlo lo más completo posible.</p>
+            <p>El Kawaiinés busca ser un idioma sencillo, fácil de aprender y encantador tanto al hablarlo como al escucharlo, especialmente para los otakus y fanáticos del anime y manga. Con su combinación de sonidos y vocabulario, el Kawaiinés ofrece una forma divertida y creativa de comunicarse.</p>
+            <p>Además de ser un idioma para disfrutar entre amigos, el Kawaiinés puede utilizarse como un lenguaje secreto para cifrar mensajes, haciendo que solo aquellos que comprendan el idioma puedan entenderlo. También puede ser simplemente un idioma adicional para divertirse y hacer algunas bromas amistosas, o incluso, si así lo deseamos, ¡convertirse en el idioma oficial de los otakus!</p>
         </div>
     </div>
 </div>
@@ -123,9 +130,7 @@
 <script>
 function redirigirTraductor() {
     var palabra = document.getElementById("palabra").value;
-    window.location.href = "traductor.html?palabra=" + encodeURIComponent(palabra);
-}
+    window.location.href = "traductor
 </script>
-
-</body>
+</body> 
 </html>
