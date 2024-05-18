@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diccionario - Kawaiinese</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    #wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    #content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 800px; /* Ancho de aproximadamente 800px */
+        height: auto; /* Alto ajustable */
+    }
+
+    #header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #f0f0f0;
+        margin-bottom: 20px;
+    }
+
+    #titulo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #paginas {
+        display: flex;
+        align-items: center;
+    }
+
+    #paginas a {
+        text-decoration: none;
+        color: black;
+        margin-right: 20px;
+    }
+
+    #paginas a:hover {
+        color: blue;
+    }
+
+    #contenido {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+</style>
+</head>
+<body>
+
+<div id="wrapper">
+    <div id="content">
+        <div id="header">
+            <div id="titulo">Diccionario - Kawaiinese</div>
+            <div id="paginas">
+                <a href="index.html">Inicio</a>
+                <a href="traductor.html">Traductor</a>
+                <a href="form.html">Crear Palabra</a>
+            </div>
+        </div>
+
+        <div id="contenido">
+            <h1>Diccionario Kawaiinese</h1>
+            <table id="tablaDiccionario">
+                <thead>
+                    <tr>
+                        <th>Español</th>
+                        <th>Kawaiinese</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas de la tabla se insertarán aquí -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var archivo = "Kawaiinese.xlsx";
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", archivo, true);
+    xhr.responseType = "arraybuffer";
+
+    xhr.onload = function() {
+        var arrayBuffer = xhr.response;
+        if (arrayBuffer) {
+            var data = new Uint8Array(arrayBuffer);
+            var workbook = XLSX.read(data, { type: "array" });
+            var sheetName = workbook.SheetNames[0];
+            var sheet = workbook.Sheets[sheetName];
+
+            // Convertir la hoja de Excel a JSON
+            var json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+            // Generar las filas de la tabla
+            var tbody = document.querySelector("#tablaDiccionario tbody");
+            for (var i = 1; i < json.length; i++) {
+                var fila = document.createElement("tr");
+                var celdaEspañol = document.createElement("td");
+                var celdaKawaiinese = document.createElement("td");
+                celdaEspañol.textContent = json[i][0];
+                celdaKawaiinese.textContent = json[i][1];
+                fila.appendChild(celdaEspañol);
+                fila.appendChild(celdaKawaiinese);
+                tbody.appendChild(fila);
+            }
+        }
+    };
+
+    xhr.send();
+});
+</script>
+
+</body>
+</html>
