@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var url = 'ReglasGramaticales.pdf';
     var canvasContainer = document.getElementById('reglasGramaticales');
 
-    PDFJS.getDocument(url).promise.then(function(pdf) {
+    pdfjsLib.getDocument(url).promise.then(function(pdf) {
         pdf.getPage(1).then(function(page) {
             var scale = 1.5;
             var viewport = page.getViewport({ scale: scale });
