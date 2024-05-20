@@ -111,36 +111,44 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.16.0/docxtemplater.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.18.1/docxtemplater.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.18.1/docxtemplater-latest.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     var archivo = "ReglasGramaticales.docx";
     var xhr = new XMLHttpRequest();
     xhr.open("GET", archivo, true);
-    xhr.responseType = "arraybuffer";
+    xhr.responseType = "blob";
 
     xhr.onload = function() {
-        var arrayBuffer = xhr.response;
-        if (arrayBuffer) {
-            var zip = new JSZip(arrayBuffer);
-            var doc = new docxtemplater().loadZip(zip);
-            var text = doc.getFullText();
-            
-            // Separar el contenido por las reglas
-            var reglas = text.split('___');
-            var divReglas = document.getElementById("reglas");
-            var html = "";
-            reglas.forEach(function(regla) {
-                if (regla.trim()) {
-                    var partes = regla.split(/\n/).map(linea => linea.trim());
-                    var reglaTitulo = partes.shift();
-                    var reglaContenido = partes.join(" ");
-                    reglaContenido = reglaContenido.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-                    html += `<div class="entry"><strong>${reglaTitulo}</strong>${reglaContenido}</div>`;
-                }
-            });
-            divReglas.innerHTML = html;
+        var blob = xhr.response;
+        if (blob) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var arrayBuffer = reader.result;
+                var zip = new JSZip();
+                zip.loadAsync(arrayBuffer).then(function(zip) {
+                    var doc = new docxtemplater().loadZip(zip);
+                    var text = doc.getFullText();
+                    
+                    // Separar el contenido por las reglas
+                    var reglas = text.split('___');
+                    var divReglas = document.getElementById("reglas");
+                    var html = "";
+                    reglas.forEach(function(regla) {
+                        if (regla.trim()) {
+                            var partes = regla.split(/\n/).map(linea => linea.trim());
+                            var reglaTitulo = partes.shift();
+                            var reglaContenido = partes.join(" ");
+                            reglaContenido = reglaContenido.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+                            html += `<div class="entry"><strong>${reglaTitulo}</strong>${reglaContenido}</div>`;
+                        }
+                    });
+                    divReglas.innerHTML = html;
+                });
+            };
+            reader.readAsArrayBuffer(blob);
         }
     };
 
