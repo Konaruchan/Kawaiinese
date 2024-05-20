@@ -62,12 +62,29 @@
         text-align: center;
     }
 
-    .regla {
-        margin-bottom: 20px;
+    .diccionario {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
 
-    .regla strong {
-        font-weight: bold;
+    .entry {
+        width: 45%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .entry:hover {
+        background-color: #f9f9f9;
+    }
+
+    .sugerido {
+        font-size: 12px;
+        color: #666;
     }
 </style>
 </head>
@@ -86,50 +103,37 @@
                 </div>
             </div>
 
-            <h1>Reglas Gramaticales Kawaiinese</h1>
-            <div class="reglas" id="reglas"></div>
+            <h1>Reglas Gramaticales de Kawaiinese</h1>
+            <div class="diccionario" id="reglasGramaticales"></div>
         </div>
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
 <script>
-// Configurar la ruta al worker de PDF.js
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
-
 document.addEventListener("DOMContentLoaded", function() {
-    // Ruta del archivo PDF
-    var archivo = "ReglasGramaticales.pdf";
+    var url = 'ReglasGramaticales.pdf';
+    var canvasContainer = document.getElementById('reglasGramaticales');
 
-    // Cargar el PDF
-    pdfjsLib.getDocument(archivo).promise.then(function(pdf) {
-        var numPages = pdf.numPages;
-        var text = "";
+    PDFJS.getDocument(url).promise.then(function(pdf) {
+        pdf.getPage(1).then(function(page) {
+            var scale = 1.5;
+            var viewport = page.getViewport({ scale: scale });
 
-        // Iterar sobre todas las páginas del PDF
-        for (var i = 1; i <= numPages; i++) {
-            pdf.getPage(i).then(function(page) {
-                // Extraer el texto de la página
-                page.getTextContent().then(function(content) {
-                    content.items.forEach(function(item) {
-                        text += item.str + " ";
-                    });
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
 
-                    // Separar el texto en reglas gramaticales
-                    var reglas = text.split("___");
+            var renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
 
-                    // Mostrar las reglas en la página
-                    var divReglas = document.getElementById("reglas");
-                    reglas.forEach(function(regla) {
-                        // Aplicar formato (negrita) a los textos entre **...**
-                        regla = regla.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-                        divReglas.innerHTML += "<div class='regla'>" + regla + "</div>";
-                    });
-                });
-            });
-        }
-    }).catch(function(reason) {
-        console.error("Error al cargar el PDF:", reason);
+            canvasContainer.appendChild(canvas);
+
+            page.render(renderContext);
+        });
     });
 });
 </script>
