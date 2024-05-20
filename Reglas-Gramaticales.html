@@ -4,7 +4,72 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reglas Gramaticales - Kawaiinese</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    #wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    #content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 800px; /* Ancho de aproximadamente 800px */
+        height: auto; /* Alto ajustable */
+    }
+
+    #header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #f0f0f0;
+        margin-bottom: 20px;
+    }
+
+    #titulo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #paginas {
+        display: flex;
+        align-items: center;
+    }
+
+    #paginas a {
+        text-decoration: none;
+        color: black;
+        margin-right: 20px;
+    }
+
+    #paginas a:hover {
+        color: blue;
+    }
+
+    #contenido {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .regla {
+        margin-bottom: 20px;
+    }
+
+    .regla strong {
+        font-weight: bold;
+    }
+</style>
 </head>
 <body>
 
@@ -18,7 +83,6 @@
                     <a href="traductor.html">Traductor</a>
                     <a href="diccionario.html">Diccionario</a>
                     <a href="form.html">Crear Palabra</a>
-                    <a href="Reglas-Gramaticales.html">Reglas Gramaticales</a>
                 </div>
             </div>
 
@@ -28,10 +92,11 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Ruta del archivo PDF
-    var archivo = "ReglasGramaticales.pdf";
+    var archivo = "reglas_gramaticales.pdf";
 
     // Cargar el PDF
     pdfjsLib.getDocument(archivo).promise.then(function(pdf) {
