@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugerir Regla Gramatical - Kawaiinese</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    #content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 800px;
+        min-height: 100vh;
+    }
+
+    #header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #f0f0f0;
+        margin-bottom: 20px;
+    }
+
+    #titulo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    #paginas {
+        display: flex;
+        align-items: center;
+    }
+
+    #paginas a {
+        text-decoration: none;
+        color: black;
+        margin-right: 20px;
+    }
+
+    #paginas a:hover {
+        color: blue;
+    }
+
+    #contenido {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: 300px;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+
+    textarea {
+        height: 80px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div id="content">
+    <div id="header">
+        <div id="titulo">Kawaiinese</div>
+        <div id="paginas">
+            <a href="index.html">Inicio</a>
+            <a href="traductor.html">Traductor</a>
+            <a href="diccionario.html">Diccionario</a>
+            <a href="form.html">Crear Palabra</a>
+            <a href="Reglas-Gramaticales.html">Reglas Gramaticales</a>
+            <a href="formgram.html">Sugerir Regla Gramatical</a>
+        </div>
+    </div>
+
+    <div id="contenido">
+        <h1>¡Sugiere una nueva regla gramatical para Kawaiinese!</h1>
+
+        <form action="https://formspree.io/f/mkndeybn" method="post">
+            <label for="inputApodo">Apodo:</label>
+            <input type="text" id="inputApodo" name="inputApodo" placeholder="Ingrese su apodo"><br>
+
+            <label for="inputNombreRegla">Nombre de la Regla Gramatical:</label>
+            <input type="text" id="inputNombreRegla" name="inputNombreRegla" placeholder="Ingrese el nombre de la regla gramatical"><br>
+
+            <label for="inputDesarrolloRegla">Desarrolla la Regla de forma detallada:</label><br>
+            <textarea id="inputDesarrolloRegla" name="inputDesarrolloRegla" placeholder="Desarrolle la regla de forma detallada"></textarea><br>
+
+            <label for="inputEmail">E-mail:</label>
+            <input type="email" id="inputEmail" name="inputEmail" placeholder="Ingrese su correo electrónico"><br>
+
+            <button type="submit">Enviar</button>
+        </form>
+
+        <p>Nota: Aquellas reglas que no estén bien explicadas o que carezcan de los suficientes detalles serán descartadas.</p>
+    </div>
+</div>
+
+</body>
+</html>
